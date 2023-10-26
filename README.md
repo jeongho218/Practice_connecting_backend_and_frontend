@@ -2,13 +2,21 @@
 
 # .env 구성
 
-> MYSQL_USERNAME=""
-> MYSQL_PASSWORD=""
-> MYSQL_DATABASE=""
-> MYSQL_HOST=""
+<pre>
+<code>
+MYSQL_USERNAME=""
+MYSQL_PASSWORD=""
+MYSQL_DATABASE=""
+MYSQL_HOST=""
+</code>
+</pre>
 
 # 실행 방법
 
-> $ npm install
-> $ npm run start
-> http://localhost:3000 접속
+<pre>
+<code>
+$ npm install
+$ npm run start
+http://localhost:3000 접속
+</code>
+</pre>
