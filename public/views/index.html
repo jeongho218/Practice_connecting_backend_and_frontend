@@ -15,6 +15,19 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
         <div class="d-flex">
+          <a href="/views" class="btn btn-link me-2 text-light">홈</a>
+          <a href="/views/mypage" class="btn btn-link me-2 text-light"
+            >마이페이지</a
+          >
+          <a href="/views/posts.html" class="btn btn-link me-2 text-light"
+            >게시글</a
+          >
+          <a href="/views/comments.html" class="btn btn-link text-light"
+            >댓글</a
+          >
+        </div>
+
+        <div class="d-flex">
           <button
             type="button"
             class="btn btn-primary me-2"
@@ -43,26 +56,44 @@
             로그아웃
           </button>
         </div>
-
-        <div class="d-flex">
-          <a href="/views" class="btn btn-link me-2 text-light">홈</a>
-          <a href="/views/mypage" class="btn btn-link me-2 text-light"
-            >마이페이지</a
-          >
-          <a href="/views/posts.html" class="btn btn-link me-2 text-light"
-            >게시글</a
-          >
-          <a href="/views/comments.html" class="btn btn-link text-light"
-            >댓글</a
-          >
-        </div>
       </div>
     </nav>
     <div class="container mt-5">
-      <!-- 내용을 이곳에 추가하세요 -->
+      <!-- 히어로 영역 시작 -->
+      <div
+        class="hero-container"
+        style="position: relative; max-width: 100%; overflow: hidden"
+      >
+        <img
+          src="https://img.freepik.com/free-photo/cup-coffee-table-front-street-with-city-lights-background_188544-10293.jpg?size=626&ext=jpg&ga=GA1.1.386372595.1698278400&semt=ais"
+          alt="히어로 이미지"
+          style="
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: brightness(50%);
+          "
+        />
+
+        <p
+          class="hero-text"
+          style="
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: white;
+            text-align: center;
+          "
+        >
+          프론트엔드 테스팅 중입니다.
+        </p>
+      </div>
+      <!-- 히어로 영역 끝 -->
     </div>
 
-    <!-- 알림 메시지 -->
+    <!-- 알림 메시지 시작 -->
     <div
       class="alert alert-success d-none"
       id="alertSuccessMessage"
@@ -140,6 +171,7 @@
         >닫기</a
       >
     </div>
+    <!-- 알림 메시지 끝 -->
 
     <!-- 팝업 모달 창 -->
     <div
@@ -323,7 +355,7 @@
               handleLoginSuccess();
             } else {
               // 사용자가 로그인되어 있지 않은 경우 '회원가입', '로그인 버튼'
-              handleLogout();
+              // handleLogout();
             }
           })
           .catch((error) => {
