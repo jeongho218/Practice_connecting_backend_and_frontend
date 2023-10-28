@@ -9,6 +9,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     />
     <title>메인 페이지</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -43,6 +44,29 @@
     </nav>
     <div class="container mt-5">
       <!-- 내용을 이곳에 추가하세요 -->
+    </div>
+
+    <!-- 알림 메시지를 위한 Bootstrap Alert 컴포넌트 추가 -->
+    <div
+      class="alert alert-danger d-none"
+      id="alertFailureMessage"
+      role="alert"
+    >
+      회원 가입에 실패했습니다. 다시 시도하세요.
+      <a href="#" class="alert-link" onclick="closeAlert('alertSuccessMessage')"
+        >닫기</a
+      >
+    </div>
+
+    <div
+      class="alert alert-success d-none"
+      id="alertSuccessMessage"
+      role="alert"
+    >
+      회원 가입이 성공적으로 완료되었습니다.
+      <a href="#" class="alert-link" onclick="closeAlert('alertFailureMessage')"
+        >닫기</a
+      >
     </div>
 
     <!-- 팝업 모달 창 -->
@@ -135,6 +159,7 @@
               type="button"
               class="btn btn-primary"
               onclick="submitSignUpForm()"
+              data-bs-dismiss="modal"
             >
               가입 완료
             </button>
@@ -143,10 +168,55 @@
       </div>
     </div>
 
+    <!-- Bootstrap CSS 파일을 CDN을 통해 불러옵니다 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+
     <!-- Bootstrap JavaScript 파일을 CDN을 통해 불러옵니다 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <script>
+      // 모달이 닫힐 때 입력 칸의 내용을 초기화합니다
+      $("#signupModal").on("hidden.bs.modal", function () {
+        document.getElementById("email").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("age").value = "";
+        document.getElementById("gender").value = "male";
+        document.getElementById("profileImage").value = "";
+      });
+
+      // 회원가입 성공 알림
+      function showSuccessAlert() {
+        document
+          .getElementById("alertSuccessMessage")
+          .classList.remove("d-none");
+
+        // 5초 후에 알림 숨김
+        setTimeout(function () {
+          closeAlert("alertSuccessMessage");
+        }, 5000);
+      }
+
+      // 회원가입 실패 알림
+      function showFailureAlert() {
+        document
+          .getElementById("alertFailureMessage")
+          .classList.remove("d-none");
+
+        // 5초 후에 알림 숨김
+        setTimeout(function () {
+          closeAlert("alertFailureMessage");
+        }, 5000);
+      }
+
+      // 알림 메시지를 숨김
+      function closeAlert(alertId) {
+        document.getElementById(alertId).classList.add("d-none");
+      }
+
       function submitSignUpForm() {
         // 모달에서 입력된 데이터를 가져옵니다
         const email = document.getElementById("email").value;
@@ -181,18 +251,16 @@
             if (response.ok) {
               // 요청이 성공적으로 처리되었을 때 실행할 코드
               console.log("가입이 완료되었습니다.");
-              // 모달을 닫습니다
-              const modal = new bootstrap.Modal(
-                document.getElementById("signupModal")
-              );
-              modal.hide();
+              showSuccessAlert();
             } else {
               // 요청이 실패했을 때 실행할 코드
               console.error("가입 요청 실패");
+              showFailureAlert(); // 회원 가입 실패 시 알림 표시
             }
           })
           .catch((error) => {
             console.error("오류:", error);
+            showFailureAlert(); // 오류 시 알림 표시
           });
       }
     </script>
