@@ -2,6 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
 .backup_*
+.tmp_*
 
 ### Node ###
 # Logs

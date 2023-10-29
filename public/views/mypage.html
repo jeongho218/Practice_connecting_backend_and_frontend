@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSS 파일을 CDN을 통해 불러옵니다 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <title>마이 페이지</title>
+    <style>
+      .profile-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%; /* 이미지를 동그랗게 만듭니다 */
+        object-fit: cover;
+      }
+
+      .user-info {
+        background-color: #f0f0f0; /* 배경색 추가 */
+        padding: 15px;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <div class="d-flex">
+          <a href="/views" class="btn btn-link me-2 text-light">홈</a>
+          <a href="/views/mypage.html" class="btn btn-link me-2 text-light"
+            >마이페이지</a
+          >
+          <a href="/views/posts.html" class="btn btn-link me-2 text-light"
+            >게시글</a
+          >
+          <a href="/views/comments.html" class="btn btn-link text-light"
+            >댓글</a
+          >
+        </div>
+      </div>
+    </nav>
+    <div class="container mt-5">
+      <!-- 히어로 영역 -->
+      <div class="row">
+        <div class="col-md-12 col-lg-3 mb-4 mb-lg-0">
+          <img
+            id="profileImage"
+            alt="프로필 이미지"
+            class="profile-image"
+            src="../image/defaultProfileImage.png"
+          />
+        </div>
+        <div class="col-md-12 col-lg-9 user-info mb-4">
+          <h2>사용자 정보</h2>
+          <p><strong>사용자 ID:</strong> <span id="userId"></span></p>
+          <p><strong>이름:</strong> <span id="name"></span></p>
+          <p><strong>나이:</strong> <span id="age"></span></p>
+          <p><strong>성별:</strong> <span id="gender"></span></p>
+          <p><strong>이메일:</strong> <span id="email"></span></p>
+        </div>
+      </div>
+    </div>
+    <script>
+      checkUserStatus();
+
+      function checkUserStatus() {
+        fetch("/api/users/me")
+          .then((response) => {
+            if (response.status === 200) {
+              return response.json();
+            } else if (response.status === 401) {
+              displayLoginMessage();
+            } else {
+              console.error("오류:", response.statusText);
+            }
+          })
+          .then((data) => {
+            if (data && data.data && data.data.email) {
+              // 로그인 성공 시
+              displayUserInfo(data.data);
+            }
+          })
+          .catch((error) => {
+            console.error("오류:", error);
+          });
+      }
+
+      // 사용자 정보를 표시
+      function displayUserInfo(userData) {
+        const profileImage =
+          userData.UserInfo.profileImage || "../image/defaultProfileImage.png";
+        document.getElementById("profileImage").src = profileImage;
+        document.getElementById("userId").textContent = userData.userId;
+        document.getElementById("email").textContent = userData.email;
+        document.getElementById("name").textContent = userData.UserInfo.name;
+        document.getElementById("age").textContent = userData.UserInfo.age;
+        document.getElementById("gender").textContent =
+          userData.UserInfo.gender;
+      }
+
+      // 로그인 상태가 아닐 경우
+      function displayLoginMessage() {
+        const loginMessage = document.createElement("p");
+        loginMessage.textContent = "로그인을 해주세요";
+        document.querySelector(".user-info").innerHTML = "";
+        document.querySelector(".user-info").appendChild(loginMessage);
+      }
+    </script>
+  </body>
+</html>
