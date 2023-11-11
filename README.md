@@ -14,5 +14,5 @@ MYSQL_HOST=""
 ```
 $ npm install
 $ npm run start
-http://localhost:3000 접속
+http://localhost:3000/views 접속
 ```
